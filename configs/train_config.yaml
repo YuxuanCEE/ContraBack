@@ -1,0 +1,75 @@
+Train:
+    batch_size: 64
+    learning_rate: 0.0001
+    attack_lr: 0.005
+    num_epochs: 50
+    warmup: 10
+    train_clean_victim: false
+
+    visualize_trigger_propagation: false
+    trigger_vis_num_samples: 5
+    trigger_vis_split: train
+    trigger_vis_dir: ./TriggerPropagation
+    trigger_vis_image_colormap: grayscale  # grayscale | light_blue_yellow
+
+    save_figure_data_csv: false
+    save_modal_embeddings: false
+    modal_embed_num_samples: 200
+    modal_embed_split: train
+    modal_embed_dir: ./ModalEmbeddings
+    modal_embed_seed: 1
+    modal_embed_batch_size: 32
+
+    timevlm_modal_ablation: false
+    timevlm_modal_mask: T1V1L1
+
+    log_stage1_loss_detail: false
+    stage1_loss_log_dir: ./Stage1LossLogs
+    stage1_probe_grad_conflict: false
+    stage1_grad_probe_batches: 1
+
+    use_trigger_carrier: true
+    trigger_carrier_alpha: 0.2
+    carrier_high_freq_ratio: 0.3
+    carrier_learnable: false
+
+    lam_prop: 0.05
+    lam_cgh: 0.05
+    lam_mag: 0.05
+    cgh_rho: 1.0
+
+    log_stage2_loss_detail: false
+    stage2_loss_log_dir: ./Stage2LossLogs
+
+    gpuid: '1'
+    surrogate_name: PatchTST
+    model_name: PatchTST
+    dataset: ETTm2
+    extra_atk_ratio: 0.3
+    pattern_type: cone
+    trigger_len: 4
+    pattern_len: 7
+    bef_tgr_len: 6
+    lam_norm: 0.05
+    alpha_s: 0.3  # spatial_poison_rate
+    alpha_t: 0.08  # temporal_poison_rate
+    epsilon: 0.2
+    hidden_dim: 64  # hidden_dim for the trigger generator
+
+    seq_len: 288
+    pred_len: 96
+    points_per_day: 24
+    sample_mode: generic  # generic or day_aligned
+    sample_stride: 1
+
+    date_col: date
+    target_col: OT
+    train_ratio: 0.8
+
+    use_trigger_locator: true
+    target_start_in_pred: 28
+    multi_trigger: True
+    max_trigger_segments: 3
+    min_segment_gap: 12
+    multi_peak_ratio: 0.7
+

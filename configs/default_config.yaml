@@ -1,0 +1,289 @@
+Model:
+    TimesNet:
+        task_name: short_term_forecast
+        seq_len: 12
+        label_len: 12
+        pred_len: 12
+        e_layers: 2
+        embed: timeF
+        freq: t
+        dropout: 0.1
+        top_k: 5
+        d_model: 256
+        d_ff: 256
+        factor: 3
+        num_kernels: 6
+        output_attention: 0
+        distil: 1
+
+    FEDformer:
+        task_name: short_term_forecast
+        seq_len: 12
+        label_len: 12
+        pred_len: 12
+        e_layers: 2
+        d_layers: 1
+        num_kernels: 6
+        embed: timeF
+        freq: t
+        dropout: 0.1
+        d_model: 512
+        d_ff: 2048
+        n_heads: 8
+        factor: 3
+        output_attention: 0
+        distil: 1
+        activation: gelu
+        moving_avg: 25
+
+    Autoformer:
+        task_name: short_term_forecast
+        seq_len: 12
+        label_len: 12
+        pred_len: 12
+        e_layers: 2
+        d_layers: 1
+        num_kernels: 6
+        embed: timeF
+        freq: t
+        dropout: 0.1
+        d_model: 512
+        d_ff: 2048
+        n_heads: 8
+        factor: 3
+        output_attention: 0
+        distil: 1
+        activation: gelu
+        moving_avg: 25
+
+    PatchTST:
+        task_name: long_term_forecast
+        seq_len: 96
+        label_len: 48
+        pred_len: 96
+        enc_in: 1
+        dec_in: 1
+        c_out: 1
+        d_model: 128
+        n_heads: 8
+        e_layers: 3
+        d_ff: 256
+        factor: 3
+        dropout: 0.1
+        fc_dropout: 0.1
+        head_dropout: 0.0
+        patch_len: 16
+        stride: 8
+        padding_patch: end
+        revin: 0
+        affine: 0
+        subtract_last: 0
+        decomposition: 0
+        kernel_size: 25
+        individual: 0
+        embed: timeF
+        freq: t
+        activation: gelu
+
+    T3Time:
+        task_name: long_term_forecast
+        seq_len: 288
+        label_len: 48
+        pred_len: 96
+        enc_in: 1
+        dec_in: 1
+        c_out: 1
+        num_nodes: 1
+        channel: 32
+        d_llm: 768
+        e_layer: 1
+        d_layer: 1
+        d_ff: 32
+        head: 8
+        dropout_n: 0.2
+        num_cma_heads: 4
+        llm_model_path: ./pretrained_models/gpt2
+        prompt_max_length: 512
+        prompt_value_round: 4
+        dataset_name: custom
+        content: A custom multivariate time series forecasting dataset.
+
+    TimeLLM:
+        task_name: long_term_forecast
+        seq_len: 96
+        label_len: 48
+        pred_len: 96
+        enc_in: 1
+        dec_in: 1
+        c_out: 1
+        d_model: 128
+        n_heads: 8
+        d_ff: 768
+        factor: 3
+        dropout: 0.1
+        patch_len: 16
+        stride: 8
+        padding: 0
+        top_k: 5
+        llm_model: GPT2
+        llm_model_path: ./pretrained_models/gpt2
+        llm_dim: 768
+        llm_layers: 1
+        num_tokens: 1000
+        prompt_domain: 1
+        prompt_max_length: 2048
+
+    TimeVLM:
+        task_name: long_term_forecast
+        seq_len: 288
+        label_len: 48
+        pred_len: 96
+        enc_in: 1
+        dec_in: 1
+        c_out: 1
+        d_model: 128
+        n_heads: 8
+        d_ff: 256
+        factor: 3
+        dropout: 0.1
+        patch_len: 16
+        stride: 8
+        padding: 8
+        top_k: 5
+        patch_memory_size: 100
+        vlm_type: CLIP
+        vlm_model_path: ./pretrained_models/clip-vit-base-patch32
+        image_size: 224
+        image_hidden_dim: 48
+        periodicity: 96
+        norm_const: 1.0
+        three_channel_image: True
+        finetune_vlm: False
+        learnable_image: True
+        save_images: False
+        save_image_dir: ts-images2/timevlm
+        save_negative_image_dir: ts-images2/negative
+        color_enhancement: blue_mapping_inverted
+        timevlm_heads: 4
+        use_gpu: True
+        gpu: 0
+
+Dataset:
+    PEMS03:
+        data_filename: ./data/PEMS03/PEMS03.npz
+        num_of_vertices: 358
+        period: 288
+        points_per_hour: 12
+        num_for_predict: 12
+        len_input: 12
+        dataset_name: PEMS03
+        use_timestamps: False
+
+    PEMS04:
+        data_filename: ./data/PEMS04/PEMS04.npz
+        num_of_vertices: 307
+        period: 288
+        points_per_hour: 12
+        num_for_predict: 12
+        len_input: 12
+        dataset_name: PEMS04
+        use_timestamps: False
+
+    PEMS08:
+        data_filename: ./data/PEMS08/PEMS08.npz
+        num_of_vertices: 170
+        period: 288
+        points_per_hour: 12
+        num_for_predict: 12
+        len_input: 12
+        dataset_name: PEMS08
+        use_timestamps: False
+
+    ETTh1:
+        data_filename: ETTh1
+        dataset_name: ETTh1
+        use_timestamps: True
+        len_input: 96
+        num_for_predict: 96
+        period: 24
+        points_per_hour: 1
+
+    ETTh2:
+        data_filename: ETTh2
+        dataset_name: ETTh2
+        use_timestamps: True
+        len_input: 96
+        num_for_predict: 96
+        period: 24
+        points_per_hour: 1
+
+    ETTm1:
+        data_filename: ETTm1
+        dataset_name: ETTm1
+        use_timestamps: True
+        len_input: 96
+        num_for_predict: 96
+        period: 96
+        points_per_hour: 4
+
+    ETTm2:
+        data_filename: ETTm2
+        dataset_name: ETTm2
+        use_timestamps: True
+        len_input: 96
+        num_for_predict: 96
+        period: 96
+        points_per_hour: 4
+
+    electricity:
+        data_filename: electricity
+        dataset_name: electricity
+        use_timestamps: True
+        len_input: 96
+        num_for_predict: 96
+        period: 24
+        points_per_hour: 1
+
+    weather:
+        data_filename: weather
+        dataset_name: weather
+        use_timestamps: True
+        len_input: 96
+        num_for_predict: 96
+        period: 144
+        points_per_hour: 6
+
+    traffic:
+        data_filename: traffic
+        dataset_name: traffic
+        use_timestamps: True
+        len_input: 96
+        num_for_predict: 96
+        period: 24
+        points_per_hour: 1
+
+    exchange_rate:
+        data_filename: exchange_rate
+        dataset_name: exchange_rate
+        use_timestamps: True
+        len_input: 96
+        num_for_predict: 96
+        period: 1
+        points_per_hour: 1
+
+    stock_data:
+        data_filename: stock_data
+        dataset_name: stock_data
+        use_timestamps: True
+        len_input: 96
+        num_for_predict: 96
+        period: 1
+        points_per_hour: 1
+
+
+
+
+Target_Pattern:
+    cone: [0.1278, 0.1748, 0.2787, 0.3853, 0.2787, 0.1748, 0.1278]
+    up_trend: [0.1405, 0.2064, 0.2705, 0.2835, 0.2949, 0.3495, 0.3567]
+    up_and_down: [0.10, 0.1687, 0.2851, 0.09601, -0.0230, -0.0916, -0.2402]
